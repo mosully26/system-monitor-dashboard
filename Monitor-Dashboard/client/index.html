@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>System Monitoring Dashboard</title>
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <div>
+          <h1>System Monitoring Dashboard</h1>
+          <p>Track device health, resource usage, and alerts</p>
+        </div>
+        <button onclick="loadDashboard()">Refresh</button>
+      </header>
+
+      <section class="summary-cards">
+        <div class="card total-card">
+          <div class="card-top">
+            <h3>Total Devices</h3>
+            <i class="fa-solid fa-server"></i>
+          </div>
+          <p id="totalDevices">0</p>
+        </div>
+
+        <div class="card online-card">
+          <div class="card-top">
+            <h3>Online</h3>
+            <i class="fa-solid fa-circle-check"></i>
+          </div>
+          <p id="onlineCount">0</p>
+        </div>
+
+        <div class="card warning-card">
+          <div class="card-top">
+            <h3>Warnings</h3>
+            <i class="fa-solid fa-triangle-exclamation"></i>
+          </div>
+          <p id="warningCount">0</p>
+        </div>
+
+        <div class="card offline-card">
+          <div class="card-top">
+            <h3>Offline</h3>
+            <i class="fa-solid fa-circle-xmark"></i>
+          </div>
+          <p id="offlineCount">0</p>
+        </div>
+      </section>
+
+      <section class="charts-section">
+        <div class="chart-card">
+          <h2>CPU Usage</h2>
+          <canvas id="cpuChart"></canvas>
+        </div>
+
+        <div class="chart-card">
+          <h2>Memory Usage</h2>
+          <canvas id="memoryChart"></canvas>
+        </div>
+      </section>
+
+      <section class="table-section">
+        <div class="section-header table-header">
+          <h2>Device Status</h2>
+
+          <div class="table-controls">
+            <input
+              type="text"
+              id="searchInput"
+              placeholder="Search devices..."
+            />
+
+            <select id="statusFilter">
+              <option value="all">All Statuses</option>
+              <option value="Online">Online</option>
+              <option value="Warning">Warning</option>
+              <option value="Offline">Offline</option>
+            </select>
+
+            <select id="sortBy">
+              <option value="name-asc">🔤 Sort: Name A-Z</option>
+              <option value="name-desc">🔤 Sort: Name Z-A</option>
+              <option value="cpu-desc">📈 CPU High-Low</option>
+              <option value="cpu-asc">📉 CPU Low-High</option>
+              <option value="memory-desc">📈 Memory High-Low</option>
+              <option value="memory-asc">📉 Memory Low-High</option>
+              <option value="lastCheck-desc">🕒 Latest Check</option>
+              <option value="lastCheck-asc">🕒 Oldest Check</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th class="sortable" data-sort="name">
+                  Device <span class="sort-indicator"></span>
+                </th>
+                <th>Status</th>
+                <th class="sortable" data-sort="cpu">
+                  CPU <span class="sort-indicator"></span>
+                </th>
+                <th class="sortable" data-sort="memory">
+                  Memory <span class="sort-indicator"></span>
+                </th>
+                <th class="sortable" data-sort="lastCheck">
+                  Last Check <span class="sort-indicator"></span>
+                </th>
+              </tr>
+            </thead>
+            <tbody id="deviceTableBody"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="alerts-section">
+        <div class="section-header">
+          <h2>System Alerts</h2>
+        </div>
+        <div id="alertsList"></div>
+      </section>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="script.js"></script>
+  </body>
+</html>
